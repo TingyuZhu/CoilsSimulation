@@ -25,13 +25,9 @@ function [BSmag] = BSmag_add_filament(BSmag,Gamma,I,dGamma)
 %----------------------------------------------------
 
 n = BSmag.Nfilament+1;
-BSmag.filament(n).Gamma = [0, 0, 0;
-    0, 0, 2;
-    0, 4.2, 2;
-    0, 4.2, 0;
-    0, 0, 0] - [0, 2.1, 1]; 
-BSmag.filament(n).I = 0.03; %[A]
-BSmag.filament(n).dGamma = 1e-3; % filament max discretization step [m] 
+BSmag.filament(n).Gamma = Gamma;
+BSmag.filament(n).I = I; %[A]
+BSmag.filament(n).dGamma = dGamma; % filament max discretization step [m]
 BSmag.Nfilament = n;
 
 %Plot P (where there is a current source)
