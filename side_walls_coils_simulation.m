@@ -23,8 +23,8 @@ Gamma = [-1.6, -2.1, -1; -1.6, -2.1, 1; -1.6, 2.1, 1; -1.6, 2.1, -1;
     % opposite direction of current flow for the left and right wall 
     % four turns each rectangular solenoid
 
-I = 0.003; % filament current [A]
-dGamma = 1e-3; % filament max discretization step [m]      
+I = -0.03; % filament current [A]
+dGamma = 1e-1; % filament max discretization step [m]      
 [BSmag] = BSmag_add_filament(BSmag,Gamma,I,dGamma);
 
 % Generate the field points (where we want to see field values)
@@ -36,10 +36,12 @@ z = linspace(-0.5,0.5,20);    % z [m]
 
 [xM, yM, zM] = meshgrid(x,y,z); 
 
-BSmag_plot_field_points(BSmag,xM,yM,zM); % -> shows the field point line
+%BSmag_plot_field_points(BSmag,xM,yM,zM); % -> shows the field point line
+sp = spm_mesh_sphere(5);
+v = sp.vertices*.5;
 
 % Biot-Savart Integration
-[BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,xM,yM,zM);      
+[BSmag,X,Y,Z,BX,BY,BZ] = BSmag_get_B(BSmag,v(:,1),v(:,2),v(:,3));      
 
 % Plot B/|B|
 figure(1)
@@ -47,12 +49,54 @@ figure(1)
 
 % normalisation
 normB=sqrt(BX.^2+BY.^2+BZ.^2);
-    
+
+
+f=figure()
+ p= [];
+ p.vertices=sp.vertices;
+ p.faces=sp.faces;
+ p.EdgeColor='none';
+ col= normB;
+ patch(p,'FaceVertexCData',col,'FaceColor','interp');
+ view([59,28])
+
+ 
+ 
+f=figure()
+ p= [];
+ p.vertices=sp.vertices;
+ p.faces=sp.faces;
+ p.EdgeColor='none';
+ col= BX;
+ patch(p,'FaceVertexCData',col,'FaceColor','interp');
+ view([59,28])
+
+ 
+ f=figure()
+ p= [];
+ p.vertices=sp.vertices;
+ p.faces=sp.faces;
+ p.EdgeColor='none';
+ col= BY;
+ patch(p,'FaceVertexCData',col,'FaceColor','interp');
+ view([59,28])
+
+  
+ f=figure()
+ p= [];
+ p.vertices=sp.vertices;
+ p.faces=sp.faces;
+ p.EdgeColor='none';
+ col= BZ;
+ patch(p,'FaceVertexCData',col,'FaceColor','interp');
+ view([59,28])
+ 
+ 
     % mean of the normB
-    mean_of_norm = mean(normB(:));
+    mean_of_norm = mean(normB(:))
 
     % stand.devi.
-    standard_deviation = std(normB(:));
+    standard_deviation = std(normB(:))
 
 
 
