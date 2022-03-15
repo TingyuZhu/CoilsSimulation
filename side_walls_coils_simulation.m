@@ -23,7 +23,7 @@ Gamma = [-1.6, -2.1, -1; -1.6, -2.1, 1; -1.6, 2.1, 1; -1.6, 2.1, -1;
     % opposite direction of current flow for the left and right wall 
     % four turns each rectangular solenoid
 
-I = 0.03; % filament current [A]
+I = 0.003; % filament current [A]
 dGamma = 1e-3; % filament max discretization step [m]      
 [BSmag] = BSmag_add_filament(BSmag,Gamma,I,dGamma);
 
